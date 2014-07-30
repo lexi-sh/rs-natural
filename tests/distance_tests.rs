@@ -1,6 +1,7 @@
 extern crate natural;
 
 use natural::distance::jaro_winkler_distance;
+use natural::distance::levenshtein_distance;
 
 #[test]
 fn test_jaro_winkler() {
@@ -14,5 +15,13 @@ fn test_jaro_winkler() {
 }
 
 fn f64_eq(a: f32, b: f32) {
-  assert!((a - b).abs() < 0.03);
+  assert!((a - b).abs() < 0.01);
+}
+
+#[test]
+fn test_lev_distance() {
+  assert_eq!(levenshtein_distance("one", "one"), 0);
+  assert_eq!(levenshtein_distance("one", ""), 3);
+  assert_eq!(levenshtein_distance("", ""), 0);
+  assert_eq!(levenshtein_distance("kitten", "sitting"), 3);
 }

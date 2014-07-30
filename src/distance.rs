@@ -94,3 +94,7 @@ pub fn jaro_winkler_distance<'sl>(str1: &'sl str, str2: &'sl str) -> f32 {
   let jw = JaroWinkler::new(CalcObjects{ first: str1, second: str2 });
   jw.calculate()
 }
+
+pub fn levenshtein_distance<'sl>(str1: &'sl str, str2: &'sl str) -> uint {
+  str1.lev_distance(str2)
+}
