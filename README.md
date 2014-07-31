@@ -8,4 +8,4 @@ Currently working:
 * Jaro-Winkler Distance
 * Levenshtein Distance
 * Tokenizing
-* NGrams (with and without padding)
+* NGrams (with and without padding) 
