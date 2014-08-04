@@ -11,3 +11,6 @@ Currently working:
 * Levenshtein Distance
 * Tokenizing
 * NGrams (with and without padding) 
+* Phonetics (Soundex)
+
+##
