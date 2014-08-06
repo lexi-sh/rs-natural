@@ -3,3 +3,6 @@
 name = "natural"
 version = "0.0.3"
 authors = [ "chris@cjqed.com" ]
+
+[dependencies.stem]
+git = "https://github.com/cjqed/rust-stem"
