@@ -18,5 +18,4 @@ fn test_stem() {
     let answer = get(input);
     assert_eq!(answer.as_slice(), output);
   }
-  
 }

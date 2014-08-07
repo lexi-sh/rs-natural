@@ -10,11 +10,21 @@ pub fn tokenize<'a>(text: &'a str) -> Vec<&str> {
 }
 
 fn char_is_token(a: char) -> bool {
-  let tokens = vec![' ', ',', '.', '!', '?', ';', '\'', '"', ':', '\t', '\n', '(', ')', '-'];
-  for x in tokens.iter() {
-    if a == *x {
-      return true;
-    }
+  match a {
+    ' ' => true,
+    ',' => true,
+    '.' => true,
+    '!' => true,
+    '?' => true,
+    ';' => true,
+    '\'' => true,
+    '"' => true,
+    ':' => true,
+    '\t' => true,
+    '\n' => true,
+    '(' => true,
+    ')' => true,
+    '-' => true,
+    _ => false
   }
-  return false;
 }
