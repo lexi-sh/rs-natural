@@ -1,6 +1,6 @@
 extern crate natural;
 
-use natural::stem::get;
+use natural::stem::stem;
 use std::collections::HashMap;
 
 #[test]
@@ -15,7 +15,7 @@ fn test_stem() {
   cases.insert("abash", "abash");
   
   for (input,output) in cases.move_iter() {
-    let answer = get(input);
+    let answer = stem(input);
     assert_eq!(answer.as_slice(), output);
   }
 }
