@@ -75,17 +75,6 @@ assert!(s1.sounds_like_str("robert"));
 
 ```
 
-### Stemming ###
-
-Stemming only currently works with English words, and fails with an `Err` if you try to stem anything that isn't ascii.
-
-```
-extern crate natural;
-use natural::stem::stem;
-
-let answer = stem("abandoned"); //abandon
-```
-
 ### Tokenization ###
 
 ```

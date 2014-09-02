@@ -1,5 +1,7 @@
+extern crate stem;
+
 use tokenize::tokenize;
-use stem::stem;
+use stem::get;
 use std::collections::HashMap;
 
 pub struct NaiveBayesClassifier {
@@ -57,5 +59,5 @@ impl NaiveBayesClassifier {
 
 fn get_tokenized_and_stemmed(text: String) -> Vec<String> {
   let tokenized_text = tokenize(text.as_slice());
-  Vec::from_fn(tokenized_text.len(), |idx| stem(tokenized_text[idx]))
+  Vec::from_fn(tokenized_text.len(), |idx| stem::get(tokenized_text[idx]).unwrap())
 }
