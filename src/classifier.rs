@@ -23,6 +23,10 @@ impl NaiveBayesClassifier {
     self.total_document_count += 1;
   }
   
+  pub fn train_ngram(&mut self, text: String, classification: String, n: uint) {
+    
+  }
+  
   pub fn guess(&self, text: String) -> String {
     let stemmed_and_tokenized = get_tokenized_and_stemmed(text);
     

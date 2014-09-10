@@ -17,10 +17,8 @@ Currently working:
  
 Near-sight goals:
 
-* Random Forest classification
 * Logistic regression classification
 * Optimize naive-bayes (currently pretty slow)
-* Standardize calls to use &str instead of String
 * Plural/Singular inflector
 * tf-idf
 
