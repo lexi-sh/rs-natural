@@ -3,6 +3,7 @@ extern crate stem;
 use tokenize::tokenize;
 use stem::get;
 use std::collections::HashMap;
+use std::collections::hashmap::{Occupied, Vacant};
 
 pub struct NaiveBayesClassifier {
   documents: HashMap<String, HashMap<String, uint>>,
@@ -15,16 +16,19 @@ impl NaiveBayesClassifier {
   }
   
   pub fn train(&mut self, text: String, classification: String) {
-    let classification_map = self.documents.find_or_insert(classification, HashMap::new());
+    let classification_map = match self.documents.entry(classification) {
+      Vacant(entry) => entry.set(HashMap::new()),
+      Occupied(entry) => entry.into_mut()
+    };
+    
     let stemmed_and_tokenized = get_tokenized_and_stemmed(text);
-    for stemmed_word in stemmed_and_tokenized.move_iter() {
-      classification_map.insert_or_update_with(stemmed_word, 1, |_key, val| *val += 1);
+    for stemmed_word in stemmed_and_tokenized.into_iter() {
+      match classification_map.entry(stemmed_word) {
+        Vacant(entry) => { entry.set(1); },
+        Occupied(mut entry) => *entry.get_mut() += 1
+      }
     }
     self.total_document_count += 1;
-  }
-  
-  pub fn train_ngram(&mut self, text: String, classification: String, n: uint) {
-    
   }
   
   pub fn guess(&self, text: String) -> String {
@@ -50,7 +54,7 @@ impl NaiveBayesClassifier {
     
     let mut answer_label: String = String::from_str("");
     let mut answer_probability = 0.0;
-    for (k,v) in label_probabilities.move_iter() {
+    for (k,v) in label_probabilities.into_iter() {
       if answer_probability <= v {
         answer_label = k.clone();
         answer_probability = v;

@@ -32,7 +32,7 @@ impl<'a> NGram<'a> {
     //Fill the rest of the ngram
     for i in range(0, count) {
       let a = tokenized_sequence.slice(i,i+self.n);
-      let sl = Vec::from_slice(a);
+      let sl = a.to_vec();
       ngram_result.push(sl);
     }
     

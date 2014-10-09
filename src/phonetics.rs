@@ -47,13 +47,13 @@ fn strip_similar_chars(chars: Vec<char>) -> Vec<char> {
   }
   let mut chars_no_hw = Vec::new();
   let mut chars_no_vowels = Vec::new();
-  for c in enc_chars.move_iter() {
+  for c in enc_chars.into_iter() {
     if c != '9' {
       chars_no_hw.push(c);
     }
   }
   chars_no_hw.dedup();
-  for c in chars_no_hw.move_iter() {
+  for c in chars_no_hw.into_iter() {
     if c != '0' {
       chars_no_vowels.push(c);
     }
