@@ -30,7 +30,7 @@ fn test_soundex_algorithm() {
   cases.insert("BILL", "BALA");
   cases.insert("nguyen", "nixon");
   
-  for (w1,w2) in cases.move_iter() {
+  for (w1,w2) in cases.into_iter() {
     assert!(soundex(w1, w2));
   }
   
