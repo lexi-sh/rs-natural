@@ -24,7 +24,7 @@ impl NaiveBayesClassifier {
     let stemmed_and_tokenized = get_tokenized_and_stemmed(text);
     for stemmed_word in stemmed_and_tokenized.into_iter() {
       match classification_map.entry(stemmed_word) {
-        Vacant(entry) => { entry.set(1); },
+        Vacant(entry) => { entry.set(1); }, // Arm must return ()
         Occupied(mut entry) => *entry.get_mut() += 1
       }
     }
@@ -47,7 +47,7 @@ impl NaiveBayesClassifier {
         label_probabilities.insert(k, 0.0);  
       }
       else {
-        label_probabilities.insert(k, (v.len() as f32 * probability.exp() / self.total_document_count as f32));
+        label_probabilities.insert(k, (v.len() as f32 * probability.abs() / self.total_document_count as f32));
       }
       
     }
