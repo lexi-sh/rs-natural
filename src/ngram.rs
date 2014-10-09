@@ -25,7 +25,8 @@ impl<'a> NGram<'a> {
           this_sequence.push(self.pad);
         }
         let sl = tokenized_sequence.slice(0, self.n-num_blanks);
-        ngram_result.push(this_sequence.append(sl));
+        this_sequence.push_all(sl);
+        ngram_result.push(this_sequence);
       }
     }
     
@@ -41,7 +42,8 @@ impl<'a> NGram<'a> {
       for i in range(1, self.n) {
         let num_blanks = i;
         let last_entry = tokenized_sequence.len();
-        let mut tc = Vec::new().append(tokenized_sequence.slice(last_entry - num_blanks, last_entry));
+        let mut tc = Vec::new();
+        tc.push_all(tokenized_sequence.slice(last_entry - num_blanks, last_entry));
         for _j in range(0, num_blanks) {
           tc.push(self.pad);
         }

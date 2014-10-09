@@ -49,7 +49,6 @@ impl NaiveBayesClassifier {
       else {
         label_probabilities.insert(k, (v.len() as f32 * probability.abs() / self.total_document_count as f32));
       }
-      
     }
     
     let mut answer_label: String = String::from_str("");
@@ -60,7 +59,6 @@ impl NaiveBayesClassifier {
         answer_probability = v;
       }
     }
-    
     answer_label
   }
 }
