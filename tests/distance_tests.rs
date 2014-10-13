@@ -14,6 +14,14 @@ fn test_jaro_winkler() {
   f64_eq(jaro_winkler_distance("dixon", "dicksonx"), 0.767);
 }
 
+#[test]
+fn test_jaro_strings() {
+  f64_eq(jaro_winkler_distance("one".to_string(), "one".to_string()), 1f32);
+  f64_eq(jaro_winkler_distance("one", "one".to_string()), 1f32);
+  f64_eq(jaro_winkler_distance("one".to_string(), "one"), 1f32);
+  f64_eq(jaro_winkler_distance("one", "one"), 1f32);
+}
+
 fn f64_eq(a: f32, b: f32) {
   assert!((a - b).abs() < 0.01);
 }

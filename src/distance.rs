@@ -90,11 +90,13 @@ impl<'b> JaroWinkler<'b> {
   }
 }
 
-pub fn jaro_winkler_distance<'sl>(str1: &'sl str, str2: &'sl str) -> f32 {
-  let jw = JaroWinkler::new(CalcObjects{ first: str1, second: str2 });
+pub fn jaro_winkler_distance<T:Str, U:Str>(str1: T, str2: U) -> f32 {
+  let jw = JaroWinkler::new(CalcObjects{ first: str1.as_slice(), second: str2.as_slice() });
   jw.calculate()
 }
 
-pub fn levenshtein_distance<'sl>(str1: &'sl str, str2: &'sl str) -> uint {
-  str1.lev_distance(str2)
+pub fn levenshtein_distance<T:Str, U:Str>(str1: T, str2: U) -> uint {
+  let a = str1.as_slice();
+  let b = str2.as_slice();
+  a.lev_distance(b)
 }

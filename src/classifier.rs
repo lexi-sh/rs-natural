@@ -31,7 +31,7 @@ impl NaiveBayesClassifier {
     self.total_document_count += 1;
   }
   
-  pub fn guess(&self, text: String) -> String {
+  pub fn guess<T:Str>(&self, text: T) -> String {
     let stemmed_and_tokenized = get_tokenized_and_stemmed(text);
     
     let mut label_probabilities = HashMap::new();
@@ -51,7 +51,7 @@ impl NaiveBayesClassifier {
       }
     }
     
-    let mut answer_label: String = String::from_str("");
+    let mut answer_label= "".to_string();
     let mut answer_probability = 0.0;
     for (k,v) in label_probabilities.into_iter() {
       if answer_probability <= v {
@@ -63,7 +63,7 @@ impl NaiveBayesClassifier {
   }
 }
 
-fn get_tokenized_and_stemmed(text: String) -> Vec<String> {
+fn get_tokenized_and_stemmed<T:Str>(text: T) -> Vec<String> {
   let tokenized_text = tokenize(text.as_slice());
   Vec::from_fn(tokenized_text.len(), |idx| stem::get(tokenized_text[idx]).unwrap())
 }
