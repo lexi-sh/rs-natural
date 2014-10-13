@@ -31,7 +31,7 @@ It's a crate with a cargo.toml. Add this to your cargo.toml:
 
 ```
 [dependencies.natural]
-git = "https://github.com/cjqed/natural"
+git = "https://github.com/cjqed/rs-natural"
 ```
 
 ### Distance ###
