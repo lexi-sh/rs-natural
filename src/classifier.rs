@@ -3,7 +3,7 @@ extern crate stem;
 use tokenize::tokenize;
 use stem::get;
 use std::collections::HashMap;
-use std::collections::hashmap::{Occupied, Vacant};
+use std::collections::hash_map::{Occupied, Vacant};
 
 pub struct NaiveBayesClassifier {
   documents: HashMap<String, HashMap<String, uint>>,
