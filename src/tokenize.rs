@@ -1,30 +1,20 @@
+use std::str::CharEq;
+
 pub fn tokenize(text: &str) -> Vec<&str> {
-  let vec_with_empty: Vec<&str> = text.split(|c: char| char_is_token(c)).collect();
-  let mut ret_vec = Vec::new();
-  for s in vec_with_empty.into_iter() {
-    if s.len() > 0 {
-      ret_vec.push(s);
-    }
-  }
-  ret_vec
+  text.split(Splitter).filter(|s| s.len() > 0).collect()
 }
 
-fn char_is_token(a: char) -> bool {
-  match a {
-    ' ' => true,
-    ',' => true,
-    '.' => true,
-    '!' => true,
-    '?' => true,
-    ';' => true,
-    '\'' => true,
-    '"' => true,
-    ':' => true,
-    '\t' => true,
-    '\n' => true,
-    '(' => true,
-    ')' => true,
-    '-' => true,
-    _ => false
-  }
+struct Splitter;
+
+impl CharEq for Splitter {
+    fn matches(&mut self, c: char) -> bool {
+        match c {
+            ' ' | ',' | '.' | '!' | '?' | ';' | '\'' |  '"'
+            | ':' | '\t' | '\n' | '(' | ')' | '-' => true,
+            _ => false
+        }
+    }
+
+    // We're only matching ASCII chars, so we can use the faster impl.
+    fn only_ascii(&self) -> bool { true }
 }
