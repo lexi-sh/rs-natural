@@ -4,6 +4,7 @@ use tokenize::tokenize;
 use stem::get;
 use std::collections::HashMap;
 use std::collections::hash_map::{Occupied, Vacant};
+use std::num::Float;
 
 pub struct NaiveBayesClassifier {
   documents: HashMap<String, HashMap<String, uint>>,
