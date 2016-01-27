@@ -1,7 +1,8 @@
-use std::str::CharEq;
 
 pub fn tokenize(text: &str) -> Vec<&str> {
-  text.split(Splitter::is_match).filter(|s| s.len() > 0).collect()
+  text.split(Splitter::is_match)
+      .filter(|s| s.len() > 0)
+      .collect()
 }
 
 struct Splitter;
