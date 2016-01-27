@@ -66,6 +66,6 @@ impl NaiveBayesClassifier {
 fn get_tokenized_and_stemmed<T:Str>(text: T) -> Vec<String> {
   let tokenized_text = tokenize(text.as_slice());
   tokenized_text.iter()
-                .map(|idx| stem::get(tokenized_text[idx]).unwrap()))
+                .map(|idx| stem::get(tokenized_text[idx]).unwrap())
                 .collect()
 }
