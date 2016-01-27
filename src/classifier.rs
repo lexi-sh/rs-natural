@@ -1,9 +1,7 @@
-extern crate stem;
-
-use tokenize::tokenize;
-use stem::get;
 use std::collections::HashMap;
 use std::collections::hash_map::Entry;
+use stem::get;
+use tokenize::tokenize;
 
 pub struct NaiveBayesClassifier {
   documents: HashMap<String, HashMap<String, usize>>,
