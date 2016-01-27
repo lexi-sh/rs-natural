@@ -3,8 +3,7 @@ extern crate stem;
 use tokenize::tokenize;
 use stem::get;
 use std::collections::HashMap;
-use std::collections::hash_map::{Occupied, Vacant};
-use std::num::Float;
+use std::collections::hash_map::Entry;
 
 pub struct NaiveBayesClassifier {
   documents: HashMap<String, HashMap<String, uint>>,
@@ -18,15 +17,15 @@ impl NaiveBayesClassifier {
   
   pub fn train(&mut self, text: String, classification: String) {
     let classification_map = match self.documents.entry(classification) {
-      Vacant(entry) => entry.set(HashMap::new()),
-      Occupied(entry) => entry.into_mut()
+      Entry::Vacant(entry) => entry.set(HashMap::new()),
+      Entry::Occupied(entry) => entry.into_mut()
     };
     
     let stemmed_and_tokenized = get_tokenized_and_stemmed(text);
     for stemmed_word in stemmed_and_tokenized.into_iter() {
       match classification_map.entry(stemmed_word) {
-        Vacant(entry) => { entry.set(1); }, // Arm must return ()
-        Occupied(mut entry) => *entry.get_mut() += 1
+        Entry::Vacant(entry) => { entry.set(1); }, // Arm must return ()
+        Entry::Occupied(mut entry) => *entry.get_mut() += 1
       }
     }
     self.total_document_count += 1;
@@ -66,5 +65,7 @@ impl NaiveBayesClassifier {
 
 fn get_tokenized_and_stemmed<T:Str>(text: T) -> Vec<String> {
   let tokenized_text = tokenize(text.as_slice());
-  Vec::from_fn(tokenized_text.len(), |idx| stem::get(tokenized_text[idx]).unwrap())
+  tokenized_text.iter()
+                .map(|idx| stem::get(tokenized_text[idx]).unwrap()))
+                .collect()
 }
