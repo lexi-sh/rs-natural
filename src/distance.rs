@@ -78,7 +78,7 @@ impl<'b> JaroWinkler<'b> {
     
     let mut t = 0.0;
     let n = self.matches1.len();
-    for i in range(0u,n) {
+    for i in 0..n {
       if self.matches2[i] != self.matches1[i] {
         t += 0.5;
       }
