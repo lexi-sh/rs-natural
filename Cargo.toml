@@ -5,4 +5,4 @@ version = "0.1.0"
 authors = [ "chris@cjqed.com" ]
 
 [dependencies.stem]
-git = "https://github.com/mrordinaire/rust-stem"
+path = "../rust-stem/"

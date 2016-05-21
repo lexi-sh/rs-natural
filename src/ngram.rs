@@ -24,14 +24,14 @@ impl<'a> NGram<'a> {
           this_sequence.push(self.pad);
         }
         let sl = &tokenized_sequence[0 .. (self.n - num_blanks)];
-        this_sequence.push_all(sl);
+        this_sequence.extend_from_slice(sl);
         ngram_result.push(this_sequence);
       }
     }
     
     //Fill the rest of the ngram
     for i in 0..count {
-      let a = tokenized_sequence.slice(i, i + self.n);
+      let a = &tokenized_sequence[i..i + self.n];
       let sl = a.to_vec();
       ngram_result.push(sl);
     }
@@ -42,7 +42,7 @@ impl<'a> NGram<'a> {
         let num_blanks = i;
         let last_entry = tokenized_sequence.len();
         let mut tc = Vec::new();
-        tc.push_all(tokenized_sequence[(last_entry - num_blanks) .. last_entry)];
+        tc.extend_from_slice(&tokenized_sequence[(last_entry - num_blanks) .. last_entry]);
         for _ in 0..num_blanks {
           tc.push(self.pad);
         }

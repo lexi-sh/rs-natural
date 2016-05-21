@@ -2,11 +2,10 @@
 name = "natural"
 version = "0.1.0"
 dependencies = [
- "stem 0.1.0 (git+https://github.com/mrordinaire/rust-stem)",
+ "stem 0.1.0",
 ]
 
 [[package]]
 name = "stem"
 version = "0.1.0"
-source = "git+https://github.com/mrordinaire/rust-stem#2f5d98eccaa5e9de4ab5ca5d9d39604e966fec3b"
 

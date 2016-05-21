@@ -21,7 +21,7 @@ struct JaroWinkler<'a> {
 }
 
 impl<'b> JaroWinkler<'b> {
-  fn new<'b>(this_obj: CalcObjects<'b>) -> JaroWinkler<'b> {
+  fn new(this_obj: CalcObjects<'b>) -> JaroWinkler<'b> {
     let mut jw = JaroWinkler {
       co: this_obj,
       matches1: Vec::new(),
@@ -58,7 +58,7 @@ impl<'b> JaroWinkler<'b> {
       };
       
       let word_slice = &s[s_index..e_index];
-      if word_slice.contains_char(c) {
+      if word_slice.contains(c) {
         common_chars.push(c);
       }
     }
@@ -92,6 +92,6 @@ pub fn jaro_winkler_distance(str1: &str, str2: &str) -> f32 {
   jw.calculate()
 }
 
-pub fn levenshtein_distance(a: &str, b: &str) -> usize {
-  a.lev_distance(b)
-}
+/* pub fn levenshtein_distance(a: &str, b: &str) -> usize {
+    // TODO: unimplemented
+}*/

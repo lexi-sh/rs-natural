@@ -1,6 +1,5 @@
 use std::collections::HashMap;
-use std::collections::hash_map::Entry;
-use stem::get;
+use stem;
 use tokenize::tokenize;
 
 pub struct NaiveBayesClassifier {
@@ -16,8 +15,8 @@ impl NaiveBayesClassifier {
     }
   }
   
-  pub fn train(&mut self, text: String, classification: String) {
-    let classification_map = self.documents.entry(classification)
+  pub fn train(&mut self, text: &str, classification: &str) {
+    let classification_map = self.documents.entry(classification.to_string())
                                            .or_insert_with(|| HashMap::new());
     let stemmed_and_tokenized = get_tokenized_and_stemmed(text);
     for stemmed_word in stemmed_and_tokenized.into_iter() {
@@ -59,7 +58,7 @@ impl NaiveBayesClassifier {
 
 fn get_tokenized_and_stemmed(text: &str) -> Vec<String> {
   let tokenized_text = tokenize(text);
-  tokenized_text.iter()
-                .map(|idx| stem::get(tokenized_text[idx]).unwrap())
+  tokenized_text.into_iter()
+                .map(|text| stem::get(text).unwrap())
                 .collect()
 }
