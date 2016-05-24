@@ -1,5 +1,3 @@
-use std::cmp;
-
 fn max_length(str1: &str, str2: &str) -> usize {
     if str1.len() > str2.len() {
       str1.len()
