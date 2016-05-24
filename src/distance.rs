@@ -10,6 +10,11 @@ fn max_length(str1: &str, str2: &str) -> usize {
 
 fn get_common_chars(str1: &str, str2: &str, ordering: bool) -> Vec<char> {
     let mut common_chars = Vec::new();
+
+    if str1.len() == 0 || str2.len() == 0 {
+        return common_chars;
+    }
+
     let max_length = max_length(str1, str2);
     let match_buffer = ( max_length / 2 ) - 1;
     let mut f = str1;
