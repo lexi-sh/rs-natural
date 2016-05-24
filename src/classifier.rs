@@ -15,9 +15,10 @@ impl NaiveBayesClassifier {
     }
   }
   
+  // Add counts of terms in some text to a classification
   pub fn train(&mut self, text: &str, classification: &str) {
     let classification_map = self.documents.entry(classification.to_string())
-                                           .or_insert_with(|| HashMap::new());
+                                           .or_insert(HashMap::new());
     let stemmed_and_tokenized = get_tokenized_and_stemmed(text);
     for stemmed_word in stemmed_and_tokenized.into_iter() {
       let stemmed_word_entry = classification_map.entry(stemmed_word).or_insert(1);
@@ -26,33 +27,41 @@ impl NaiveBayesClassifier {
     self.total_document_count += 1;
   }
   
+  // Get a guess of input text based on existing unigram counts
   pub fn guess(&self, text: &str) -> String {
     let stemmed_and_tokenized = get_tokenized_and_stemmed(text);
     let mut label_probabilities = HashMap::new();
-    for (k, v) in self.documents.iter() {
+
+    for (classification, word_counts) in self.documents.iter() {
       //Get the probability that the passed-in text is each class
       let mut probability = 0.0f32;
       for stemmed_word in &stemmed_and_tokenized {
-        if v.contains_key(stemmed_word) {
-          probability += (1.0 / v.len() as f32).ln();
+        if word_counts.contains_key(stemmed_word) {
+          probability += (1.0 / word_counts.len() as f32).ln();
         }
       }
+
+      // store the calculated probability for the classification
       if probability.abs() < 0.0001 {
-        label_probabilities.insert(k, 0.0);
+        label_probabilities.insert(classification, 0.0);
       } else {
-        label_probabilities.insert(k, (v.len() as f32 * probability.abs() / self.total_document_count as f32));
+        let normalized_prob = word_counts.len() as f32 * probability.abs() /
+                              self.total_document_count as f32;
+
+        label_probabilities.insert(classification, normalized_prob);
       }
     }
     
-    let mut answer_label = String::new();
-    let mut answer_probability = 0.0;
-    for (k, v) in label_probabilities.into_iter() {
-      if answer_probability <= v {
-        answer_label = k.clone();
-        answer_probability = v;
+    // determine the label of the highest probability
+    let mut result_label = String::new();
+    let mut result_probability = 0.0;
+    for (classification, prob) in label_probabilities.into_iter() {
+      if result_probability <= prob {
+        result_label = classification.clone();
+        result_probability = prob;
       }
     }
-    answer_label
+    result_label
   }
 }
 
