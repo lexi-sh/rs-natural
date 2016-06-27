@@ -42,7 +42,7 @@ fn soundex_encoding(chars: Vec<char>) -> Vec<char> {
 fn strip_similar_chars(chars: Vec<char>) -> Vec<char> {
   let mut enc_chars = Vec::new();
   enc_chars.push(chars[0]);
-  for i in range(1, chars.len()) {
+  for i in 1..chars.len() {
     enc_chars.push(get_char_digit(chars[i]));
   }
   let mut chars_no_hw = Vec::new();
@@ -70,14 +70,14 @@ fn fix_length(mut chars: Vec<char>) -> Vec<char> {
 }
 
 fn add_more_zeros(chars: Vec<char>) -> Vec<char> {
-  Vec::from_fn(4, |idx| { 
+  (0..4).map( |idx| { 
     if idx < chars.len() {
       chars[idx]
     }
     else {
       '0'
     }
-  })
+  }).collect()
 }
 
 
