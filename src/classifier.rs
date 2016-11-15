@@ -30,10 +30,13 @@ impl NaiveBayesClassifier {
   // Get a guess of input text based on existing unigram counts
   pub fn guess(&self, text: &str) -> String {
     let stemmed_and_tokenized = get_tokenized_and_stemmed(text);
-    let mut label_probabilities = HashMap::new();
+
+    let mut result_label = String::new();
+    let mut result_probability = 0.0;
 
     for (classification, word_counts) in self.documents.iter() {
       //Get the probability that the passed-in text is each class
+      let mut normalized_prob = 0.0;
       let mut probability = 0.0f32;
       for stemmed_word in &stemmed_and_tokenized {
         if word_counts.contains_key(stemmed_word) {
@@ -43,24 +46,17 @@ impl NaiveBayesClassifier {
 
       // store the calculated probability for the classification
       if probability.abs() < 0.0001 {
-        label_probabilities.insert(classification, 0.0);
+        normalized_prob = 0.0;
       } else {
-        let normalized_prob = word_counts.len() as f32 * probability.abs() /
-                              self.total_document_count as f32;
-
-        label_probabilities.insert(classification, normalized_prob);
+        normalized_prob = word_counts.len() as f32 * probability.abs() /
+                          self.total_document_count as f32;
       }
-    }
-    
-    // determine the label of the highest probability
-    let mut result_label = String::new();
-    let mut result_probability = 0.0;
-    for (classification, prob) in label_probabilities.into_iter() {
-      if result_probability <= prob {
+      if result_probability <= normalized_prob {
+        result_probability = normalized_prob;
         result_label = classification.clone();
-        result_probability = prob;
       }
     }
+
     result_label
   }
 }

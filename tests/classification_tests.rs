@@ -1,6 +1,7 @@
 extern crate natural;
 
 use natural::classifier::NaiveBayesClassifier;
+use test::Bencher;
 
 #[test]
 fn test_basic_usage() {
