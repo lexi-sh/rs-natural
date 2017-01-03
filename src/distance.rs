@@ -1,3 +1,5 @@
+use std::cmp;
+
 fn max_length(str1: &str, str2: &str) -> usize {
     if str1.len() > str2.len() {
       str1.len()
@@ -68,6 +70,32 @@ pub fn jaro_winkler_distance(str1: &str, str2: &str) -> f32 {
     (f1 + f2 + f3) / 3.0
 }
 
-/* pub fn levenshtein_distance(a: &str, b: &str) -> usize {
-    // TODO: unimplemented
-}*/
+// ported from http://hetland.org/coding/python/levenshtein.py
+pub fn levenshtein_distance(str1: &str, str2: &str) -> usize {
+    let n = str1.len();
+    let m = str2.len();
+
+    let mut column: Vec<usize> = (0..n + 1).collect();
+    // TODO this probaly needs to use graphemes
+    let a_vec: Vec<char> = str1.chars().collect();
+    let b_vec: Vec<char> = str2.chars().collect();
+    for i in 1..m + 1 {
+        let previous = column;
+        column = vec![0; n + 1];
+        column[0] = i;
+        for j in 1..n + 1 {
+            let add = previous[j] + 1;
+            let delete = column[j - 1] + 1;
+            let mut change = previous[j - 1];
+            if a_vec[j - 1] != b_vec[i - 1] {
+                change = change + 1
+            }
+            column[j] = min3(add, delete, change);
+        }
+    }
+    column[n]
+}
+
+fn min3<T: Ord>(a: T, b: T, c: T) -> T{
+    cmp::min(a, cmp::min(b, c))
+}
