@@ -36,7 +36,7 @@ git = "https://github.com/cjqed/rs-natural"
 
 ### Distance ###
 
-```
+```rust
 extern crate natural;
 use natural::distance::jaro_winkler_distance;
 use natural::distance::levenshtein_distance;
@@ -48,7 +48,7 @@ assert_eq!(jaro_winkler_distance("dixon", "dicksonx"), 0.767);
 
 Note, don't actually `assert_eq!` on JWD since it returns an f64. To test, I actually use:
 
-```
+```rust
 fn f64_eq(a: f32, b: f32) {
   assert!((a - b).abs() < 0.01);
 }
@@ -59,7 +59,7 @@ fn f64_eq(a: f32, b: f32) {
 
 There are two ways to gain access to the SoundEx algorithm in this library, either through a simple `soundex` function that accepts two `&str` parameters and returns a boolean, or through the SoundexWord struct. I will show both here.
 
-```
+```rust
 use natural::phonetics::soundex;
 use natural::phonetics::SoundexWord;
 
@@ -75,7 +75,7 @@ assert!(s1.sounds_like_str("robert"));
 
 ### Tokenization ###
 
-```
+```rust
 extern crate natural;
 use natural::tokenize::tokenize;
 
@@ -88,7 +88,7 @@ assert_eq!(tokenize("My dog has fleas."), vec!["My", "dog", "has", "fleas"]);
 
 You can create an ngram with and without padding, e.g.:
 
-```
+```rust
 extern crate natural;
 
 use natural::ngram::get_ngram;
@@ -102,7 +102,7 @@ assert_eq!(get_ngram_with_padding("my fleas", 2, "----"), vec![
 
 ### Classification ###
 
-```
+```rust
 extern crate natural;
 use natural::classifier::NaiveBayesClassifier;
 
