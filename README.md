@@ -14,13 +14,13 @@ Currently working:
 * Phonetics (Soundex)
 * Stemming (Using a fork of [rust-stem](https://github.com/mrordinaire/rust-stem))
 * Naive-Bayes classification
+* Term Frequency-Inverse Document Frequency(tf-idf)
  
 Near-sight goals:
 
 * Logistic regression classification
 * Optimize naive-bayes (currently pretty slow)
 * Plural/Singular inflector
-* tf-idf
 
 ## How to use ##
 
@@ -114,4 +114,22 @@ nbc.train(STRING_TO_TRAIN, LABEL);
 nbc.train(STRING_TO_TRAIN, LABEL);
 
 nbc.guess(STRING_TO_GUESS); //returns a label with the highest probability
+```
+
+### Tf-Idf ###
+
+```rust
+extern crate natural;
+use natural::tf_idf::TfIdf;
+
+tf_idf.add("this document is about rust.");
+tf_idf.add("this document is about erlang.");
+tf_idf.add("this document is about erlang and rust.");
+tf_idf.add("this document is about rust. it has rust examples");
+
+println!(tf_idf.get("rust")); //0.2993708f32
+println!(tf_idf.get("erlang")); //0.13782766f32
+
+//average of multiple terms
+println!(tf_idf.get("rust erlang"); //0.21859923
 ```

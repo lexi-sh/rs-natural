@@ -10,3 +10,5 @@ name = "stem"
 version = "0.1.0"
 source = "git+https://github.com/mrordinaire/rust-stem#9584f586d4299286d6acaf34949bf9823d19f825"
 
+[metadata]
+"checksum stem 0.1.0 (git+https://github.com/mrordinaire/rust-stem)" = "<none>"
