@@ -11,6 +11,6 @@ fn test_basic_usage() {
 	tf_idf.add("this document is about erlang and rust.");
 	tf_idf.add("this document is about rust. it has rust examples");
 
-	assert_eq!(tf_idf.get("rust"), 0.2993708f32 );
+	assert_eq!(tf_idf.get("rust erlang"), 0.2993708f32 );
 	assert!(tf_idf.get("rust") > tf_idf.get("erlang"));
 }

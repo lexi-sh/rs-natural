@@ -129,4 +129,5 @@ tf_idf.add("this document is about rust. it has rust examples");
 
 assert_eq!(tf_idf.get("rust"), 0.2993708f32 );
 assert_eq!(tf_idf.get("erlang"), 0.13782766f32 );
+assert_eq!(tf_idf.get("rust erlang", 0.21859923 ); //average of multiple terms
 ```

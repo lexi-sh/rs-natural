@@ -71,6 +71,7 @@ impl TfIdf {
 		ratio.ln()
 	}
 
+	//Calculate tf-idf for one term
 	fn tf_idf(&self, term: &str) -> f32 {
 		let tf = self.tf(term);
 		let idf = self.idf(term);
@@ -88,7 +89,7 @@ impl TfIdf {
 
 		let score: f32 = token_ref.into_iter()
 			    .map(|x| self.tf_idf(&x))
-			    .fold(1.0f32, |acc, x| acc * x); //multiply together to later divide by token length to get an average
+			    .fold(0.0f32, |acc, x| acc + x); //add together to later divide by token length to get an average
 
 	  //average the scores
 		score / tokens.len() as f32
