@@ -17,7 +17,7 @@ fn test_loop<
     for (test, expect) in tests.zip(results) {
         let test = test.trim_right();
         let expect = expect.trim_right();
-        let stemmed = stem::stem(test.trim_right());
+        let stemmed = stem::get(test.trim_right());
 
         assert_eq!(stemmed.trim_right(), expect);
     }

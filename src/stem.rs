@@ -323,7 +323,7 @@ impl Stemmer {
     }
 }
 
-pub fn stem(word: &str) -> String {
+pub fn get(word: &str) -> String {
     if word.len() > 2 {
         let mut mw = Stemmer::new(word);
         mw.step1ab();
