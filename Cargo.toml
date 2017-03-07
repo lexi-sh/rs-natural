@@ -1,7 +1,13 @@
 [package]
 
 name = "natural"
-version = "0.2.0"
+version = "0.2.1"
 authors = [ "chris@cjqed.com", "curlywurlycraig@gmail.com" ]
 license = "MIT"
-description = "Pure rust library for natural language processing"
+description = "Pure rust library for natural language processing."
+readme = "README.md"
+categories = ["text-processing", "algorithms"]
+repository = "https://github.com/cjqed/rs-natural"
+
+[badges]
+travis-ci = { repository = "https://travis-ci.org/cjqed/rs-natural", }

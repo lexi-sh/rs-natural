@@ -30,8 +30,8 @@ Use at your own risk. Some functionality is missing, some other functionality is
 It's a crate with a cargo.toml. Add this to your cargo.toml:
 
 ```
-[dependencies.natural]
-git = "https://github.com/cjqed/rs-natural"
+[dependencies]
+natural = "0.2.1"
 ```
 
 ### Distance ###
