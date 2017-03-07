@@ -1,8 +1,5 @@
 [package]
 
 name = "natural"
-version = "0.1.1"
+version = "0.2.0"
 authors = [ "chris@cjqed.com", "curlywurlycraig@gmail.com" ]
-
-[dependencies.stem]
-git = "https://github.com/mrordinaire/rust-stem"
