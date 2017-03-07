@@ -3,3 +3,5 @@
 name = "natural"
 version = "0.2.0"
 authors = [ "chris@cjqed.com", "curlywurlycraig@gmail.com" ]
+license = "MIT"
+description = "Pure rust library for natural language processing"
