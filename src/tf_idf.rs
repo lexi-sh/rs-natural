@@ -76,9 +76,6 @@ impl TfIdf {
 		let tf = self.tf(term);
 		let idf = self.idf(term);
 
-		println!("{:?}", tf);
-		println!("{:?}", idf);
-
 		tf * idf
 	}
 
