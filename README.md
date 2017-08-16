@@ -31,7 +31,7 @@ It's a crate with a cargo.toml. Add this to your cargo.toml:
 
 ```
 [dependencies]
-natural = "0.2.1"
+natural = "0.3.0"
 ```
 
 ### Distance ###
