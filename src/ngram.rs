@@ -38,11 +38,11 @@ impl<'a> NGram<'a> {
     
     //right-padding
     if !self.pad.is_empty() {
-      for i in 1..self.n {
-        let num_blanks = self.n - i;
+      for num_blanks in 1..self.n {
+        let num_tokens = self.n - num_blanks;
         let last_entry = tokenized_sequence.len();
         let mut tc = Vec::new();
-        tc.extend_from_slice(&tokenized_sequence[(last_entry - i) .. last_entry]);
+        tc.extend_from_slice(&tokenized_sequence[(last_entry - num_tokens) .. last_entry]);
         for _ in 0..num_blanks {
           tc.push(self.pad);
         }
