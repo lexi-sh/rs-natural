@@ -11,7 +11,7 @@ fn max_length(str1: &str, str2: &str) -> usize {
 fn get_common_chars(str1: &str, str2: &str, ordering: bool) -> Vec<char> {
     let mut common_chars = Vec::new();
 
-    if str1.len() == 0 || str2.len() == 0 {
+    if str1.is_empty() || str2.is_empty() {
         return common_chars;
     }
 
@@ -88,7 +88,7 @@ pub fn levenshtein_distance(str1: &str, str2: &str) -> usize {
             let delete = column[j - 1] + 1;
             let mut change = previous[j - 1];
             if a_vec[j - 1] != b_vec[i - 1] {
-                change = change + 1
+                change += 1
             }
             column[j] = min3(add, delete, change);
         }

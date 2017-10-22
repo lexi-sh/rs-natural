@@ -1,7 +1,7 @@
 
 pub fn tokenize(text: &str) -> Vec<&str> {
   text.split(Splitter::is_match)
-      .filter(|s| s.len() > 0)
+      .filter(|s| !s.is_empty())
       .collect()
 }
 
