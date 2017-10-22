@@ -21,8 +21,8 @@ impl SoundexWord {
       chars.push(c);
     }
     chars = soundex_encoding(chars);
-    let s = SoundexWord { word: chars };
-    s
+    SoundexWord { word: chars }
+    
   }
   
   pub fn sounds_like(&self, second_word: SoundexWord) -> bool {

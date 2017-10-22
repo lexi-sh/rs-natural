@@ -78,9 +78,7 @@ impl Stemmer {
 
     #[inline]
     fn double_consonant(&self, i: usize) -> bool {
-        if i < 1 {
-            false
-        } else if self.b[i] != self.b[i - 1] {
+        if i < 1 || self.b[i] != self.b[i - 1] {
             false
         } else {
             self.is_consonant(i)
@@ -108,13 +106,11 @@ impl Stemmer {
         let len = s.len();
         if len > self.k {
             false
+        } else if &self.b[self.k - len..self.k] == s {
+            self.j = self.k - len;
+            true
         } else {
-            if &self.b[self.k - len..self.k] == s {
-                self.j = self.k - len;
-                true
-            } else {
-                false
-            }
+            false
         }
     }
 
@@ -244,8 +240,7 @@ impl Stemmer {
                 else { return }
             }
             b'c' => {
-                if self.ends("ance") {}
-                else if self.ends("ence") {}
+                if self.ends("ance") || self.ends("ence") {}
                 else { return }
             }
             b'e' => {
@@ -257,15 +252,14 @@ impl Stemmer {
                 else { return }
             }
             b'l' => {
-                if self.ends("able") {}
-                else if self.ends("ible") {}
+                if self.ends("able") || self.ends("ible") {}
                 else { return }
             }
             b'n' => {
-                if self.ends("ant") {}
-                else if self.ends("ement") {}
-                else if self.ends("ment") {}
-                else if self.ends("ent") {}
+                if self.ends("ant") 
+                || self.ends("ement") 
+                || self.ends("ment") 
+                || self.ends("ent") {}
                 else { return }
             }
             b'o' => {
@@ -280,8 +274,7 @@ impl Stemmer {
                 else { return }
             }
             b't' => {
-                if self.ends("ate") {}
-                else if self.ends("iti") {}
+                if self.ends("ate") || self.ends("iti") {}
                 else { return }
             }
             b'u' => {
