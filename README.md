@@ -1,7 +1,7 @@
 rs-natural
 ==========
 
-[![Build Status](https://travis-ci.org/cjqed/rs-natural.svg?branch=master)](https://travis-ci.org/cjqed/rs-natural)
+[![Build Status](https://travis-ci.org/christophertrml/rs-natural.svg?branch=master)](https://travis-ci.org/christophertrml/rs-natural)
 
 Natural language processing library written in Rust. Still very much a work in progress. Basically an experiment, but hey maybe something cool will come out of it.
 
