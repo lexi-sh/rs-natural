@@ -263,7 +263,7 @@ impl Stemmer {
                 else { return }
             }
             b'o' => {
-                if self.ends("ion") &&
+                if self.ends("ion") && self.j > 0 &&
                     (self.b[self.j - 1] == b's' || self.b[self.j - 1] == b't') {}
                 else if self.ends("ou") {}
                 else { return }
