@@ -11,3 +11,10 @@ repository = "https://github.com/cjqed/rs-natural"
 
 [badges]
 travis-ci = { repository = "https://travis-ci.org/cjqed/rs-natural" }
+
+[features]
+default = []
+serde_support = ["serde"]
+
+[dependencies]
+serde = { version = "1.0", features = ["derive"], optional = true }

@@ -1,3 +1,6 @@
+#[cfg(feature = "serde_support")]
+extern crate serde;
+
 pub mod distance;
 pub mod ngram;
 pub mod tokenize;
