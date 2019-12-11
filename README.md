@@ -14,7 +14,9 @@ Currently working:
 * Phonetics (Soundex)
 * Stemming (Using a fork of [rust-stem](https://github.com/mrordinaire/rust-stem))
 * Naive-Bayes classification
+  * Serialization via Serde
 * Term Frequency-Inverse Document Frequency(tf-idf)
+  * Serialization via Serde
  
 Near-sight goals:
 
@@ -32,6 +34,9 @@ It's a crate with a cargo.toml. Add this to your cargo.toml:
 ```
 [dependencies]
 natural = "0.3.0"
+
+# Or enable Serde support
+natural = { version = "0.4.0", features = ["serde_support"]}
 ```
 
 ### Distance ###
