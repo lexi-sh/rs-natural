@@ -37,6 +37,7 @@ natural = "0.3.0"
 
 # Or enable Serde support
 natural = { version = "0.4.0", features = ["serde_support"]}
+serde = "1.0"
 ```
 
 ### Distance ###
