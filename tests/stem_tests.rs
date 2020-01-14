@@ -15,11 +15,11 @@ fn test_loop<
     results: I1
 ) {
     for (test, expect) in tests.zip(results) {
-        let test = test.trim_right();
-        let expect = expect.trim_right();
-        let stemmed = stem::get(test.trim_right());
+        let test = test.trim_end();
+        let expect = expect.trim_end();
+        let stemmed = stem::get(test.trim_end());
 
-        assert_eq!(stemmed.trim_right(), expect);
+        assert_eq!(stemmed.trim_end(), expect);
     }
 }
 

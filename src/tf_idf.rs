@@ -1,5 +1,4 @@
 use std::collections::HashMap;
-use std::cmp::Ordering;
 use stem;
 use tokenize::tokenize;
 

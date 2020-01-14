@@ -2,7 +2,6 @@
  * This code is taken courtesy of https://github.com/mrordinaire/rust-stem
 */
 
-use std::ascii::AsciiExt;
 use std::borrow::ToOwned;
 use std::str;
 
