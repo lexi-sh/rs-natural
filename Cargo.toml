@@ -9,6 +9,9 @@ readme = "README.md"
 categories = ["text-processing", "algorithms"]
 repository = "https://github.com/cjqed/rs-natural"
 
+[profile.release]
+lto = true
+
 [badges]
 travis-ci = { repository = "https://travis-ci.org/cjqed/rs-natural" }
 
