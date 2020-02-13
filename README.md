@@ -12,7 +12,6 @@ Currently working:
 * Tokenizing
 * NGrams (with and without padding) 
 * Phonetics (Soundex)
-* Stemming (Using a fork of [rust-stem](https://github.com/mrordinaire/rust-stem))
 * Naive-Bayes classification
   * Serialization via Serde
 * Term Frequency-Inverse Document Frequency(tf-idf)

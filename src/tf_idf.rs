@@ -1,12 +1,12 @@
-use std::collections::HashMap;
-use std::cmp::Ordering;
-use stem;
+use std::collections::{HashMap, HashSet};
 use tokenize::tokenize;
+use std::borrow::Cow;
+use rust_stemmers::{Algorithm, Stemmer};
 
 #[cfg(feature = "serde_support")]
 use serde::{Serialize, Deserialize};
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Default)]
 #[cfg_attr(feature = "serde_support", derive(Serialize, Deserialize))]
 pub struct TfIdf {
 	//token counts for inverse document frequency
@@ -34,24 +34,24 @@ impl TfIdf {
 
 	//Add documents to test frequency against
 	pub fn add(&mut self, corpus: &str) {
-		let mut tokens = get_tokenized_and_stemmed(corpus);
-		let tokens_ref = &mut tokens;
+		let tokens = get_tokenized_and_stemmed(corpus);
 
-		for token in tokens_ref.into_iter() {
-			let entry = self.term_freqs.entry(token.to_owned()).or_insert(0);
+                let mut seen = HashSet::new();
 
-			*entry += 1;
-			self.word_count += 1;
-		}
+                tokens.iter()
+                    .for_each(|token| {
+                        self.term_freqs.entry(token.to_string()).and_modify(|e| {
+                            *e += 1;
+                        }).or_insert(0);
+                        self.word_count += 1;
 
-		tokens_ref.sort();
-		tokens_ref.dedup();
-
-		for token in tokens_ref.into_iter() {
-			let entry = self.doc_freqs.entry(token.to_owned()).or_insert(0);
-
-			*entry += 1;
-		}
+                        if !seen.contains(&token){
+                            seen.insert(token);
+                            self.doc_freqs.entry(token.to_string())
+                                .and_modify(|e| *e += 1)
+                                .or_insert(0);
+                        }
+                    });
 
 		self.doc_count += 1;
 	}
@@ -59,7 +59,7 @@ impl TfIdf {
 	//Calculate term frequency for one term
 	fn tf(&self, term: &str) -> f32 {
 		match self.term_freqs.get(term) {
-			Some(freq) => freq.clone() as f32 / self.word_count as f32,
+			Some(freq) => *freq as f32 / self.word_count as f32,
 			None => 0.0f32
 		}
 	}
@@ -67,7 +67,7 @@ impl TfIdf {
 	//Calculate inverse document frequency for one term
 	fn idf(&self, term: &str) -> f32 {
 		let doc_freq = match self.doc_freqs.get(term) {
-			Some(freq) => freq.clone() as f32,
+			Some(freq) => *freq as f32,
 			None => 0.0f32
 		};
 
@@ -89,7 +89,7 @@ impl TfIdf {
 		let tokens = get_tokenized_and_stemmed(terms);
 		let token_ref = &tokens;
 
-		let score: f32 = token_ref.into_iter()
+		let score: f32 = token_ref.iter()
 			    .map(|x| self.tf_idf(&x))
 			    .fold(0.0f32, |acc, x| acc + x); //add together to later divide by token length to get an average
 
@@ -99,9 +99,9 @@ impl TfIdf {
 }
 
 
-fn get_tokenized_and_stemmed(text: &str) -> Vec<String> {
-  let tokenized_text = tokenize(text);
-  tokenized_text.into_iter()
-                .map(|text| stem::get(text))
+fn get_tokenized_and_stemmed<'a>(text: &'a str) -> Vec<Cow<'a, str>> {
+  let en_stemmer = Stemmer::create(Algorithm::English);
+  tokenize(text).into_iter()
+                .map(|text| en_stemmer.stem(text))
                 .collect()
 }

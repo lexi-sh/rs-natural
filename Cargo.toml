@@ -18,3 +18,4 @@ serde_support = ["serde"]
 
 [dependencies]
 serde = { version = "1.0", features = ["derive"], optional = true }
+rust-stemmers = "1.2.0"

@@ -1,11 +1,12 @@
 use std::collections::HashMap;
-use stem;
 use tokenize::tokenize;
+use std::borrow::Cow;
+use rust_stemmers::{Algorithm, Stemmer};
 
 #[cfg(feature = "serde_support")]
 use serde::{Serialize, Deserialize};
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Default)]
 #[cfg_attr(feature = "serde_support", derive(Serialize, Deserialize))]
 pub struct NaiveBayesClassifier {
   documents: HashMap<String, HashMap<String, usize>>,
@@ -23,12 +24,11 @@ impl NaiveBayesClassifier {
   // Add counts of terms in some text to a classification
   pub fn train(&mut self, text: &str, classification: &str) {
     let classification_map = self.documents.entry(classification.to_string())
-                                           .or_insert(HashMap::new());
-    let stemmed_and_tokenized = get_tokenized_and_stemmed(text);
-    for stemmed_word in stemmed_and_tokenized.into_iter() {
-      let stemmed_word_entry = classification_map.entry(stemmed_word).or_insert(1);
-      *stemmed_word_entry += 1;
-    }
+                                           .or_default();
+    get_tokenized_and_stemmed(text).into_iter()
+        .for_each(|token| {
+            classification_map.entry(token.to_string()).and_modify(|e| *e += 1).or_insert(1);
+        });
     self.total_document_count += 1;
   }
   
@@ -36,39 +36,29 @@ impl NaiveBayesClassifier {
   pub fn guess(&self, text: &str) -> String {
     let stemmed_and_tokenized = get_tokenized_and_stemmed(text);
 
-    let mut result_label = String::new();
-    let mut result_probability = 0.0;
+    self.documents.iter()
+        .map(|(class, word_counts)| {
+            let probability: f64 = stemmed_and_tokenized.iter()
+                .filter(|token| word_counts.contains_key(&token.to_string()))
+                .map(|_| {
+                    (1.0 / word_counts.len() as f64).ln()
+                }).sum();
 
-    for (classification, word_counts) in self.documents.iter() {
-      //Get the probability that the passed-in text is each class
-      let mut normalized_prob = 0.0;
-      let mut probability = 0.0f32;
-      for stemmed_word in &stemmed_and_tokenized {
-        if word_counts.contains_key(stemmed_word) {
-          probability += (1.0 / word_counts.len() as f32).ln();
-        }
-      }
-
-      // store the calculated probability for the classification
-      if probability.abs() < 0.0001 {
-        normalized_prob = 0.0;
-      } else {
-        normalized_prob = word_counts.len() as f32 * probability.abs() /
-                          self.total_document_count as f32;
-      }
-      if result_probability <= normalized_prob {
-        result_probability = normalized_prob;
-        result_label = classification.clone();
-      }
-    }
-
-    result_label
+            let prob_abs = probability.abs();
+            let normalized_prob = if prob_abs < 0.0001 {
+                0.0
+            } else {
+                word_counts.len() as f64 * prob_abs / self.total_document_count as f64
+            };
+            
+            (class, normalized_prob)
+        }).max_by(|a, b| a.1.partial_cmp(&b.1).unwrap()).expect("failed to ").0.clone()
   }
 }
 
-fn get_tokenized_and_stemmed(text: &str) -> Vec<String> {
-  let tokenized_text = tokenize(text);
-  tokenized_text.into_iter()
-                .map(|text| stem::get(text))
+fn get_tokenized_and_stemmed<'a>(text: &'a str) -> Vec<Cow<'a, str>> {
+  let en_stemmer = Stemmer::create(Algorithm::English);
+  tokenize(text).into_iter()
+                .map(|text| en_stemmer.stem(text))
                 .collect()
 }
