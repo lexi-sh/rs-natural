@@ -64,7 +64,7 @@ fn strip_similar_chars(chars: Vec<char>) -> Vec<char> {
 fn fix_length(mut chars: Vec<char>) -> Vec<char> {
   match chars.len() {
     4 => chars,
-    0...3 => add_more_zeros(chars),
+    0..=3 => add_more_zeros(chars),
     _ => { chars.truncate(4); chars} //truncate doesn't return self?
   }
 }
