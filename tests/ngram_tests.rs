@@ -13,3 +13,8 @@ fn test_ngram_with_pad() {
   assert_eq!(get_ngram_with_padding("my fleas", 2, "boo"), vec![
     vec!["boo", "my"], vec!["my", "fleas"], vec!["fleas", "boo"]]);
 }
+
+#[test]
+fn test_ngram_too_short() {
+  assert_eq!(get_ngram("singleword", 2).len(), 0);
+}

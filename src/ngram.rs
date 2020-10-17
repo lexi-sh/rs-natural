@@ -10,11 +10,15 @@ impl<'a> NGram<'a> {
   fn calculate(&self) -> Vec<Vec<&'a str>> {
     let mut tokenized_sequence = tokenize(self.text);
     tokenized_sequence.shrink_to_fit();
-    
-    let count = tokenized_sequence.len() - self.n + 1;
-    
+
     let mut ngram_result = Vec::new();
-    
+
+    if tokenized_sequence.len() < self.n {
+      return ngram_result
+    }
+
+    let count = tokenized_sequence.len() - self.n + 1;
+
     //left-padding
     if !self.pad.is_empty() {
       for i in 1..self.n {
