@@ -1,4 +1,6 @@
 use std::cmp;
+extern crate unicode_segmentation;
+use self::unicode_segmentation::UnicodeSegmentation;
 
 fn max_length(str1: &str, str2: &str) -> usize {
     if str1.len() > str2.len() {
@@ -72,18 +74,17 @@ pub fn jaro_winkler_distance(str1: &str, str2: &str) -> f32 {
 
 // ported from http://hetland.org/coding/python/levenshtein.py
 pub fn levenshtein_distance(str1: &str, str2: &str) -> usize {
-    let n = str1.len();
-    let m = str2.len();
+    let a_vec:Vec<&str> = UnicodeSegmentation::graphemes(str1, true);
+    let b_vec:Vec<&str> = UnicodeSegmentation::graphemes(str2, true);
+    let n = a_vec.len();
+    let m = b_vec.len();
 
-    let mut column: Vec<usize> = (0..n + 1).collect();
-    // TODO this probaly needs to use graphemes
-    let a_vec: Vec<char> = str1.chars().collect();
-    let b_vec: Vec<char> = str2.chars().collect();
-    for i in 1..m + 1 {
+    let mut column: Vec<usize> = (0..=n).collect();    
+    for i in 1..=m {
         let previous = column;
         column = vec![0; n + 1];
         column[0] = i;
-        for j in 1..n + 1 {
+        for j in 1..=n {
             let add = previous[j] + 1;
             let delete = column[j - 1] + 1;
             let mut change = previous[j - 1];
